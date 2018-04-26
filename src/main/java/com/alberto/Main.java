@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alberto;
 
-/**
- *
- * @author ablancoabalde
- */
+import java.io.IOException;
+import javax.swing.JFileChooser;
+
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
+    JFileChooser chooser=new JFileChooser();
+
     public Main() {
         initComponents();
     }
@@ -29,8 +22,8 @@ public class Main extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Btn_Abrir = new javax.swing.JButton();
+        Btn_Init = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -54,11 +47,23 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setName(""); // NOI18N
+
         jLabel1.setText("Init repository");
 
-        jButton1.setText("Seleccionar Repo.");
+        Btn_Abrir.setText("Seleccionar Repo.");
+        Btn_Abrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_AbrirActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Inicializar Repo");
+        Btn_Init.setText("Inicializar Repo");
+        Btn_Init.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_InitActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Commit");
 
@@ -110,9 +115,9 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
-                                .addComponent(jButton1)
+                                .addComponent(Btn_Abrir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2))
+                                .addComponent(Btn_Init))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,8 +170,8 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(Btn_Abrir)
+                    .addComponent(Btn_Init))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -223,6 +228,36 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
+    /**
+     *  Abre el buscador del sistema para elegir la carpeta que quieras inicializar.
+     * @param evt 
+     */
+    private void Btn_AbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AbrirActionPerformed
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
+
+            System.out.println("getCurrentDirectory(): "+chooser.getCurrentDirectory());
+            System.out.println("getSelectedFile() : "+chooser.getSelectedFile());
+        } else {
+        }
+
+        try {
+            Logic.setRepository(chooser.getSelectedFile());
+            
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_Btn_AbrirActionPerformed
+    /**
+     * Crea el archivo .git, para inicializar la carpeta
+     * @param evt 
+     */
+    private void Btn_InitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_InitActionPerformed
+        Logic.initRepository();
+    }//GEN-LAST:event_Btn_InitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,8 +295,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton Btn_Abrir;
+    private javax.swing.JButton Btn_Init;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
