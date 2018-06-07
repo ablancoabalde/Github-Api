@@ -97,4 +97,27 @@ public class Logic {
         } catch (GitAPIException ex) {
         }
     }
+
+    /**
+     * Permite clonar un repositorio de github. Pide la url del repositorio y el
+     * directorio donde se guardara.
+     *
+     * @param repositoryURL
+     * @param directorio
+     *
+     */
+    public static void clonar(String repositoryURL, File directorio) {
+        try {
+            Git.cloneRepository()
+                    .setURI(repositoryURL)
+                    .setDirectory(directorio)
+                    .call();
+            JOptionPane.showMessageDialog(null, "Repositorio clonado correctamente.");
+
+        } catch (GitAPIException ex) {
+
+            JOptionPane.showMessageDialog(null, "Ha habido un error al clonar el Repositorio.");
+        }
+    }
+
 }

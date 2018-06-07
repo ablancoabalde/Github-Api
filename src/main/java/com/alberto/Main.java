@@ -42,9 +42,9 @@ public class Main extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tJurlGit = new javax.swing.JTextField();
         btnSubir = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnClonar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +100,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Clonar");
+        btnClonar.setText("Clonar");
+        btnClonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClonarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,10 +149,10 @@ public class Main extends javax.swing.JFrame {
                                     .addGap(23, 23, 23)
                                     .addComponent(jLabel9)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tJurlGit, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addGap(408, 408, 408)
-                                    .addComponent(jButton5)))
+                                    .addComponent(btnClonar)))
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -217,9 +222,9 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tJurlGit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(btnClonar)
                 .addContainerGap())
         );
 
@@ -297,6 +302,29 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSubirActionPerformed
 
     /**
+     * Recoge la Url del directorio que vas a clonar
+     *
+     * @param evt
+     */
+    private void btnClonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClonarActionPerformed
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Selecciona la ruta para el Repositorio");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+            System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
+            System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+        } else {
+
+            System.out.println("Ruta no seleccionada ");
+        }
+        Logic.clonar(tJurlGit.getText(), chooser.getSelectedFile());
+    }//GEN-LAST:event_btnClonarActionPerformed
+
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -334,9 +362,9 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Abrir;
     private javax.swing.JButton Btn_Init;
+    private javax.swing.JButton btnClonar;
     private javax.swing.JButton btnCommit;
     private javax.swing.JButton btnSubir;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -354,7 +382,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTNombre;
     private javax.swing.JPasswordField jTPassword;
     private javax.swing.JTextField jTURL;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextArea tArea;
+    private javax.swing.JTextField tJurlGit;
     // End of variables declaration//GEN-END:variables
 }
