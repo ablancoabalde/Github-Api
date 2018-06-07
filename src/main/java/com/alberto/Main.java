@@ -5,7 +5,7 @@ import javax.swing.JFileChooser;
 
 public class Main extends javax.swing.JFrame {
 
-    JFileChooser chooser=new JFileChooser();
+    JFileChooser chooser = new JFileChooser();
 
     public Main() {
         initComponents();
@@ -28,8 +28,8 @@ public class Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton3 = new javax.swing.JButton();
+        tArea = new javax.swing.JTextArea();
+        btnCommit = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -69,11 +69,16 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Comentario");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        tArea.setColumns(20);
+        tArea.setRows(5);
+        jScrollPane1.setViewportView(tArea);
 
-        jButton3.setText("Comitear");
+        btnCommit.setText("Comitear");
+        btnCommit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCommitActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Push");
 
@@ -103,7 +108,7 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3))
+                                .addComponent(btnCommit))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -180,7 +185,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(btnCommit)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,36 +233,49 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
-     *  Abre el buscador del sistema para elegir la carpeta que quieras inicializar.
-     * @param evt 
+     * Abre el buscador del sistema para elegir la carpeta que quieras
+     * inicializar.
+     *
+     * @param evt
      */
     private void Btn_AbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AbrirActionPerformed
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
 
-        if (chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
-            System.out.println("getCurrentDirectory(): "+chooser.getCurrentDirectory());
-            System.out.println("getSelectedFile() : "+chooser.getSelectedFile());
+            System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
+            System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
         } else {
         }
 
         try {
             Logic.setRepository(chooser.getSelectedFile());
-            
+
         } catch (IOException ex) {
         }
     }//GEN-LAST:event_Btn_AbrirActionPerformed
     /**
      * Crea el archivo .git, para inicializar la carpeta
-     * @param evt 
+     *
+     * @param evt
      */
     private void Btn_InitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_InitActionPerformed
         Logic.initRepository();
     }//GEN-LAST:event_Btn_InitActionPerformed
+    /**
+     * Recoge el texto del tArea y lo envia al metodo, para luego agregarlo al
+     * commit
+     *
+     * @param evt
+     */
+
+    private void btnCommitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommitActionPerformed
+         Logic.commitRepository(tArea.getText());
+    }//GEN-LAST:event_btnCommitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,7 +315,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Abrir;
     private javax.swing.JButton Btn_Init;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCommit;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -315,9 +333,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextArea tArea;
     // End of variables declaration//GEN-END:variables
 }
