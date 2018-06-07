@@ -2,10 +2,16 @@ package com.alberto;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.swing.JOptionPane;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PushCommand;
+import org.eclipse.jgit.api.RemoteAddCommand;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 public class Logic {
 
@@ -61,6 +67,34 @@ public class Logic {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Ha habido un error al hacerle commit al Repositorio.");
+        }
+    }
+
+    /**
+     * Permite subir el repositorio a github. Pide la URL, nombre y contraseña
+     * de la cuenta con la que se subira.
+     *
+     * @param httpURL
+     * @param username
+     * @param password
+     * @throws URISyntaxException
+     *
+     */
+    public static void pushRepository(String httpURL, String username, String password) throws URISyntaxException {
+
+        try {
+            Git git = new Git(repository);
+            RemoteAddCommand remoteAddCommand = git.remoteAdd();
+            remoteAddCommand.setName("origin");
+            remoteAddCommand.setUri(new URIish(httpURL));
+            remoteAddCommand.call();
+
+            // Pushea y introduce los datos del usuario de git
+            PushCommand pushCommand = git.push();
+            pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, password));
+            pushCommand.call();
+
+        } catch (GitAPIException ex) {
         }
     }
 }
